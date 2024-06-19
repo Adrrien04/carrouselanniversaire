@@ -4,7 +4,7 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 1.6
+Version: 1.7
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
@@ -42,7 +42,7 @@ add_action('edit_user_profile_update', 'bc_save_custom_user_profile_fields');
 function bc_enqueue_custom_styles() {
     wp_enqueue_style('bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
     wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), null, true);
-
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
 
     wp_add_inline_style('bootstrap-css', '
         .carousel-item {
@@ -65,9 +65,14 @@ function bc_enqueue_custom_styles() {
         }
         .carousel-caption h5 {
             margin: 5px 0;
+            color: black;
         }
         .carousel-caption p {
-            color: #666;
+            color: black;
+        }
+        .carousel-caption i {
+            color: black;
+            margin-right: 5px;
         }
     ');
 }
@@ -100,6 +105,7 @@ function bc_birthday_carousel() {
                 ?>
                 <div class="carousel-item <?php echo $active_class; ?>">
                     <div class="carousel-caption d-none d-md-block">
+                        <i class="fas fa-birthday-cake"></i>
                         <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
                         <h5><?php echo $display_name; ?></h5>
                         <p><?php echo $birthday; ?></p>
