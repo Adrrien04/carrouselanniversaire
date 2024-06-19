@@ -4,7 +4,7 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 2.2
+Version: 2.3
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
@@ -83,17 +83,20 @@ function bc_enqueue_custom_styles() {
         .carousel-text {
             flex: 2;
         }
-    .carousel-control-prev-icon,
+   .carousel-control-prev-icon,
     .carousel-control-next-icon {
-        background-color: transparent;
-        border: 2px solid black;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
+        background-image: none;
     }
-        #birthdayCarousel {
-            padding-left: 0;
-        }
+    .carousel-control-prev-icon::before,
+    .carousel-control-next-icon::before {
+        content: "\\f104";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        color: black;
+    }
+    .carousel-control-next-icon::before {
+        content: "\\f105";
+    }
     ');
 }
 add_action('wp_enqueue_scripts', 'bc_enqueue_custom_styles');
