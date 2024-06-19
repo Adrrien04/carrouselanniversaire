@@ -4,7 +4,7 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 1.1
+Version: 1.2
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
