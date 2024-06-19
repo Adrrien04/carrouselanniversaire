@@ -1,9 +1,11 @@
 <?php
 /*
-Plugin Name: Birthday Carousel
-Description: Affiche un carrousel des anniversaires à venir.
-Version: 1.5
-Author: Votre Nom
+Plugin Name: Carrousel d'anniversaire
+Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
+Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
+Author: CHANDRAKUMAR Adrrien
+Version: 1.3
+Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
 function bc_add_custom_user_profile_fields($user) {
