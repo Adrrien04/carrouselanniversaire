@@ -4,7 +4,7 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 1.3
+Version: 1.4
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
@@ -63,15 +63,15 @@ function bc_enqueue_custom_styles() {
         .carousel-caption {
             position: static;
             padding: 10px;
-            color: #333; /* Couleur du texte pour une meilleure lisibilité */
+            color: #333;
         }
         .carousel-caption h5 {
             margin: 5px 0;
-            font-size: 1.25em; /* Augmenter la taille de la police pour le nom */
+            font-size: 1.25em;
         }
         .carousel-caption p {
             color: #666;
-            font-size: 1em; /* Taille de la police pour la date d\'anniversaire */
+            font-size: 1em;
         }
     ');
 }
@@ -97,11 +97,11 @@ function bc_birthday_carousel() {
     $users = get_users($args);
     $active_class = 'active';
     ob_start();
-    ?>
-    <div id="birthdayCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <?php
-            if (!empty($users)) {
+    if (!empty($users)) {
+        ?>
+        <div id="birthdayCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <?php
                 foreach ($users as $user) {
                     if (!user_can($user, 'administrator') && get_user_meta($user->ID, 'birthday', true) != '') {
                         $birthday = date('d-m', strtotime(get_user_meta($user->ID, 'birthday', true)));
@@ -123,21 +123,21 @@ function bc_birthday_carousel() {
                         }
                     }
                 }
-            } else {
-                echo '<p>Aucun anniversaire à venir.</p>';
-            }
-            ?>
+                ?>
+            </div>
+            <a class="carousel-control-prev" href="#birthdayCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#birthdayCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <a class="carousel-control-prev" href="#birthdayCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#birthdayCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <?php
+        <?php
+    } else {
+        echo '<p>Aucun anniversaire à venir.</p>';
+    }
     return ob_get_clean();
 }
 
