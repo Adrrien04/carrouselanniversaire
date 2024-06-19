@@ -4,9 +4,10 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 1.2
+Version: 1.3
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
+
 
 function bc_add_custom_user_profile_fields($user) {
     ?>
@@ -100,26 +101,30 @@ function bc_birthday_carousel() {
     <div id="birthdayCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <?php
-            foreach ($users as $user) {
-                if (!user_can($user, 'administrator') && get_user_meta($user->ID, 'birthday', true) != '') {
-                    $birthday = date('d-m', strtotime(get_user_meta($user->ID, 'birthday', true)));
-                    $display_name = $user->display_name;
-                    $profile_picture = get_avatar_url($user->ID);
-                    $today_md = date('m-d', strtotime(get_user_meta($user->ID, 'birthday', true)));
-                    $today_date = date('m-d');
-                    if ($today_md >= $today_date) {
-                        ?>
-                        <div class="carousel-item <?php echo $active_class; ?>">
-                            <div class="carousel-caption d-none d-md-block">
-                                <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
-                                <h5><?php echo $display_name; ?></h5>
-                                <p><?php echo $birthday; ?></p>
+            if (!empty($users)) {
+                foreach ($users as $user) {
+                    if (!user_can($user, 'administrator') && get_user_meta($user->ID, 'birthday', true) != '') {
+                        $birthday = date('d-m', strtotime(get_user_meta($user->ID, 'birthday', true)));
+                        $display_name = $user->display_name;
+                        $profile_picture = get_avatar_url($user->ID);
+                        $today_md = date('m-d', strtotime(get_user_meta($user->ID, 'birthday', true)));
+                        $today_date = date('m-d');
+                        if ($today_md >= $today_date) {
+                            ?>
+                            <div class="carousel-item <?php echo $active_class; ?>">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
+                                    <h5><?php echo $display_name; ?></h5>
+                                    <p><?php echo $birthday; ?></p>
+                                </div>
                             </div>
-                        </div>
-                        <?php
-                        $active_class = '';
+                            <?php
+                            $active_class = '';
+                        }
                     }
                 }
+            } else {
+                echo '<p>Aucun anniversaire à venir.</p>';
             }
             ?>
         </div>
