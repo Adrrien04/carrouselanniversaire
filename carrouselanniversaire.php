@@ -4,7 +4,7 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 1.7
+Version: 1.8
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
@@ -27,7 +27,6 @@ function bc_add_custom_user_profile_fields($user) {
 add_action('show_user_profile', 'bc_add_custom_user_profile_fields');
 add_action('edit_user_profile', 'bc_add_custom_user_profile_fields');
 
-
 function bc_save_custom_user_profile_fields($user_id) {
     if (!current_user_can('edit_user', $user_id)) {
         return false;
@@ -37,7 +36,6 @@ function bc_save_custom_user_profile_fields($user_id) {
 
 add_action('personal_options_update', 'bc_save_custom_user_profile_fields');
 add_action('edit_user_profile_update', 'bc_save_custom_user_profile_fields');
-
 
 function bc_enqueue_custom_styles() {
     wp_enqueue_style('bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
@@ -74,10 +72,20 @@ function bc_enqueue_custom_styles() {
             color: black;
             margin-right: 5px;
         }
+        .carousel-content {
+            display: flex;
+            align-items: center;
+        }
+        .carousel-image {
+            flex: 1;
+            text-align: center;
+        }
+        .carousel-text {
+            flex: 2;
+        }
     ');
 }
 add_action('wp_enqueue_scripts', 'bc_enqueue_custom_styles');
-
 
 function bc_birthday_carousel() {
     $today = date('m-d');
@@ -105,10 +113,16 @@ function bc_birthday_carousel() {
                 ?>
                 <div class="carousel-item <?php echo $active_class; ?>">
                     <div class="carousel-caption d-none d-md-block">
-                        <i class="fas fa-birthday-cake"></i>
-                        <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
-                        <h5><?php echo $display_name; ?></h5>
-                        <p><?php echo $birthday; ?></p>
+                        <div class="carousel-content">
+                            <div class="carousel-image">
+                                <i class="fas fa-birthday-cake"></i>
+                                <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
+                            </div>
+                            <div class="carousel-text">
+                                <h5><?php echo $display_name; ?></h5>
+                                <p><?php echo $birthday; ?></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <?php
