@@ -62,12 +62,15 @@ function bc_enqueue_custom_styles() {
         .carousel-caption {
             position: static;
             padding: 10px;
+            color: #333; /* Couleur du texte pour une meilleure lisibilité */
         }
         .carousel-caption h5 {
             margin: 5px 0;
+            font-size: 1.25em; /* Augmenter la taille de la police pour le nom */
         }
         .carousel-caption p {
             color: #666;
+            font-size: 1em; /* Taille de la police pour la date d\'anniversaire */
         }
     ');
 }
@@ -81,6 +84,13 @@ function bc_birthday_carousel() {
         'orderby' => 'meta_value',
         'order' => 'ASC',
         'meta_type' => 'DATE',
+        'meta_query' => array(
+            array(
+                'key' => 'birthday',
+                'value' => '',
+                'compare' => '!=',
+            ),
+        ),
     );
 
     $users = get_users($args);
@@ -91,22 +101,24 @@ function bc_birthday_carousel() {
         <div class="carousel-inner">
             <?php
             foreach ($users as $user) {
-                $birthday = date('d-m', strtotime(get_user_meta($user->ID, 'birthday', true)));
-                $display_name = $user->display_name;
-                $profile_picture = get_avatar_url($user->ID);
-                $today_md = date('m-d', strtotime(get_user_meta($user->ID, 'birthday', true)));
-                $today_date = date('m-d');
-                if($today_md >= $today_date){
-                ?>
-                <div class="carousel-item <?php echo $active_class; ?>">
-                    <div class="carousel-caption d-none d-md-block">
-                        <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
-                        <h5><?php echo $display_name; ?></h5>
-                        <p><?php echo $birthday; ?></p>
-                    </div>
-                </div>
-                <?php
-                $active_class = '';
+                if (!user_can($user, 'administrator') && get_user_meta($user->ID, 'birthday', true) != '') {
+                    $birthday = date('d-m', strtotime(get_user_meta($user->ID, 'birthday', true)));
+                    $display_name = $user->display_name;
+                    $profile_picture = get_avatar_url($user->ID);
+                    $today_md = date('m-d', strtotime(get_user_meta($user->ID, 'birthday', true)));
+                    $today_date = date('m-d');
+                    if ($today_md >= $today_date) {
+                        ?>
+                        <div class="carousel-item <?php echo $active_class; ?>">
+                            <div class="carousel-caption d-none d-md-block">
+                                <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
+                                <h5><?php echo $display_name; ?></h5>
+                                <p><?php echo $birthday; ?></p>
+                            </div>
+                        </div>
+                        <?php
+                        $active_class = '';
+                    }
                 }
             }
             ?>
@@ -125,4 +137,5 @@ function bc_birthday_carousel() {
 }
 
 add_shortcode('carrousel_anniversaire', 'bc_birthday_carousel');
+
 ?>
