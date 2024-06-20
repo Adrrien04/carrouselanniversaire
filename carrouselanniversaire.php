@@ -4,7 +4,7 @@ Plugin Name: Carrousel d'anniversaire
 Plugin URI: https://github.com/Adrrien04/carrouselanniversaire
 Description: Vous trouverez ici le meilleur plugin de l'histoire de wordpress, le carrousel d'anniversaire !
 Author: CHANDRAKUMAR Adrrien
-Version: 2.3
+Version: 3.2
 Author URI: https://adrrienchandrakumar.vercel.app/
 */
 
@@ -49,20 +49,23 @@ function bc_enqueue_custom_styles() {
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
+            background-color: #f7a000;
             margin: 10px;
+            margin-right: 10px;
+            border-radius: 10px;
+            height: 280px
         }
         .carousel-item img {
-            max-width: 100px;
+            max-width: 125px;
             border-radius: 50%;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         .carousel-caption {
             position: static;
-            padding: 10px;
+            padding: 5px;
         }
-        .carousel-caption h5 {
-            margin: 5px 0;
+        .carousel-caption h4 {
+            margin: 7px 0;
             color: black;
         }
         .carousel-caption p {
@@ -73,6 +76,7 @@ function bc_enqueue_custom_styles() {
             margin-right: 5px;
         }
         .carousel-content {
+            margin-top: 50px;
             display: flex;
             align-items: center;
         }
@@ -91,7 +95,7 @@ function bc_enqueue_custom_styles() {
     .carousel-control-next-icon::before {
         content: "\\f104";
         font-family: "Font Awesome 5 Free";
-        font-weight: 900;
+        font-weight: 1000;
         color: black;
     }
     .carousel-control-next-icon::before {
@@ -102,7 +106,7 @@ function bc_enqueue_custom_styles() {
 add_action('wp_enqueue_scripts', 'bc_enqueue_custom_styles');
 
 function bc_birthday_carousel() {
-    $today = date('m-d');
+    $today = date('m / d');
     $args = array(
         'meta_key' => 'birthday',
         'orderby' => 'meta_value',
@@ -118,7 +122,7 @@ function bc_birthday_carousel() {
         <div class="carousel-inner">
             <?php
             foreach ($users as $user) {
-                $birthday = date('d-m', strtotime(get_user_meta($user->ID, 'birthday', true)));
+                $birthday = date('d / m', strtotime(get_user_meta($user->ID, 'birthday', true)));
                 $display_name = $user->display_name;
                 $profile_picture = get_avatar_url($user->ID);
                 $today_md = date('m-d', strtotime(get_user_meta($user->ID, 'birthday', true)));
@@ -132,7 +136,7 @@ function bc_birthday_carousel() {
                                 <img src="<?php echo $profile_picture; ?>" alt="<?php echo $display_name; ?>">
                             </div>
                             <div class="carousel-text">
-                                <h5><i class="fa-solid fa-party-horn"></i><?php echo $display_name; ?></h5>
+                                <h4><i class="fa-solid fa-party-horn"></i><?php echo $display_name; ?></h4>
                                 <p><?php echo $birthday; ?></p>
                             </div>
                         </div>
